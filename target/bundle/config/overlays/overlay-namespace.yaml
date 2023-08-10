@@ -28,6 +28,19 @@ spec:
             #@overlay/replace via=lambda left, right: left.replace("default", data.values.namespace)
             - default
 
+#@overlay/match by=overlay.subset({"kind": "Deployment", "metadata": {"name": "external-secrets-webhook"}})
+---
+spec:
+  template:
+    spec:
+      containers:
+        #@overlay/match by=overlay.map_key("name")
+        - name: webhook
+          args:
+            #@overlay/match by=endswith
+            #@overlay/replace via=lambda left, right: left.replace("external-secrets-webhook.default.svc", "external-secrets-webhook.{}.svc".format(data.values.namespace))
+            - external-secrets-webhook.default.svc
+
 #@overlay/match by=overlay.subset({"metadata": {"namespace": "default"}}), expects=10
 ---
 metadata:
