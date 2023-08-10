@@ -1,0 +1,15 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: external-secrets-operator
+  namespace: external-secrets-operator-package
+spec:
+  serviceAccountName: external-secrets-operator
+  packageRef:
+    refName: external-secrets-operator.dev.failk8s.com
+    versionSelection:
+      constraints: 0.0.0+develop
+      prereleases: {}
+  values:
+  - secretRef:
+      name: external-secrets-operator

@@ -1,0 +1,41 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ data.values.namespace
+
+#@overlay/match by=overlay.subset({"metadata": {"namespace": "default"}}), expects=10
+---
+metadata:
+  namespace: #@ data.values.namespace
+
+#@ crb=overlay.subset({"kind":"ClusterRoleBinding"})
+#@ rb=overlay.subset({"kind":"RoleBinding"})
+#@overlay/match by=overlay.or_op(crb, rb), expects=3
+---
+subjects:
+  #@overlay/match by=overlay.subset({"namespace": "default"})
+  - kind: ServiceAccount
+    namespace: #@ data.values.namespace
+
+#@ vwc=overlay.subset({"kind":"ValidatingWebhookConfiguration"})
+#@ mwc=overlay.subset({"kind":"MutatingWebhookConfiguration"})
+#@overlay/match by=overlay.or_op(vwc, mwc), expects=2
+---
+webhooks:
+  #@overlay/match by=overlay.all, expects="1+"
+  - clientConfig:
+      service:
+        namespace: #@ data.values.namespace
+
+#@overlay/match by=overlay.subset({"kind": "CustomResourceDefinition"}), expects=11
+---
+spec:
+  conversion:
+    webhook:
+      clientConfig:
+        service:
+          namespace: #@ data.values.namespace

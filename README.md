@@ -1,24 +1,24 @@
-# <#PACKAGE-NAME>-package
+# external-secrets-operator-package
 
-This package provides <#PACKAGE-NAME> functionality using [<#PACKAGE-NAME>](<#PACKAGE-NAME-DOCS-URL>).
+This package provides external-secrets-operator functionality using [external-secrets-operator](https://external-secrets.io/).
 
 ## Components
 
-* <#PACKAGE-NAME>
+* external-secrets-operator
 
 ## Configuration
 
-The following configuration values can be set to customize the <#PACKAGE-NAME> installation.
+The following configuration values can be set to customize the external-secrets-operator installation.
 
 ### Global
 
-| Value | Required/Optional | Description |
-|-------|-------------------|-------------|
-| `namespace` | Optional | The namespace in which to deploy <#PACKAGE-NAME>. |
+| Value | Required/Optional | Default | Description |
+|-------|-------------------|---------|-------------|
+| `namespace` | Optional | external-secrets |The namespace in which to deploy external-secrets-operator. |
 
 ## Usage Example
 
-This walkthrough guides you through using <#PACKAGE-NAME>...
+This walkthrough guides you through using external-secrets-operator...
 
 __NOTE__: `develop` version of the package needs to comply with semver, hence the package will be versioned as `0.0.0+develop`
 
@@ -46,7 +46,7 @@ kubectl apply -f target/test/packageinstall-ns-rbac.yaml
 
 Create the configuration file for your cluster:
 ```
-kubectl create secret generic <#PACKAGE-NAME> -n <#PACKAGE-NAME>-package --from-file=values.yaml=src/examples-values/minikube.yaml -o yaml --dry-run=client | kubectl apply -f -
+kubectl create secret generic external-secrets-operator -n external-secrets-operator-package --from-file=values.yaml=src/examples-values/minikube.yaml -o yaml --dry-run=client | kubectl apply -f -
 ```
 
 Create the package:
@@ -62,7 +62,7 @@ watch kubectl get packageinstall -A
 If there's an issue, you can verify the problem with:
 
 ```
-kubectl get packageinstall <#PACKAGE-NAME> -n <#PACKAGE-NAME>-package -o yaml
+kubectl get packageinstall external-secrets-operator -n external-secrets-operator-package -o yaml
 ```
 
 ## Develop checklist

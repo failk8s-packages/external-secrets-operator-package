@@ -1,10 +1,10 @@
 {
     "registry": "quay.io/failk8s",
     "package": {
-        "name": "<#PACKAGE-NAME>",
+        "name": "external-secrets-operator",
         "domain": "dev.failk8s.com",
-        "displayName": "<#DISPLAY NAME>",
-        "version": "<#VERSION>"
+        "displayName": "External Secrets Operator",
+        "version": "develop"
     },
-    "packages":[]
+    "packages": []
 }
